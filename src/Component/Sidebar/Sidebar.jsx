@@ -11,10 +11,10 @@ import {
   AiOutlineRight,
 } from "react-icons/ai";
 import { useTheme } from "../../contexts/theme/hook/useTheme";
-import clsx from "clsx"; // Import clsx
+import clsx from "clsx"; 
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
-  const { theme } = useTheme(); // Get current theme from context
+  const { theme } = useTheme(); 
   const location = useLocation();
 
   const menuItems = [
