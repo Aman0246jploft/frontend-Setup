@@ -1,18 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
   AiOutlineBell,
-  AiOutlineSearch,
-  AiOutlineUser,
   AiOutlineDown,
   AiOutlineSetting,
   AiOutlineLogout,
   AiOutlineProfile,
   AiOutlineQuestionCircle,
-  AiOutlineBgColors,
 } from "react-icons/ai";
 import { useTheme } from "../../contexts/theme/hook/useTheme";
-import Input from "../Atoms/InputFields/Inputfield";
-import Image from "../Atoms/Image/Image"; // Import your Image component
+import Image from "../Atoms/Image/Image";
 
 const Header = () => {
   const { currentTheme, changeTheme, theme } = useTheme();
@@ -28,42 +24,48 @@ const Header = () => {
       key: "light",
       name: "Light",
       icon: "🌞",
-      description: "Clean and bright"
+      description: "Clean and bright",
     },
     {
       key: "dark",
       name: "Dark",
       icon: "🌙",
-      description: "Easy on the eyes"
+      description: "Easy on the eyes",
     },
     {
       key: "red",
       name: "Red",
       icon: "🔴",
-      description: "Bold and vibrant"
+      description: "Bold and vibrant",
     },
     {
       key: "green",
       name: "Green",
       icon: "🟢",
-      description: "Fresh and natural"
-    }
+      description: "Fresh and natural",
+    },
   ];
 
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
+      if (
+        profileDropdownRef.current &&
+        !profileDropdownRef.current.contains(event.target)
+      ) {
         setShowProfileDropdown(false);
       }
-      if (themeDropdownRef.current && !themeDropdownRef.current.contains(event.target)) {
+      if (
+        themeDropdownRef.current &&
+        !themeDropdownRef.current.contains(event.target)
+      ) {
         setShowThemeDropdown(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -73,7 +75,10 @@ const Header = () => {
   };
 
   const getCurrentThemeInfo = () => {
-    return themeOptions.find(option => option.key === currentTheme) || themeOptions[0];
+    return (
+      themeOptions.find((option) => option.key === currentTheme) ||
+      themeOptions[0]
+    );
   };
 
   const profileMenuItems = [
@@ -83,7 +88,7 @@ const Header = () => {
       onClick: () => {
         console.log("View Profile clicked");
         setShowProfileDropdown(false);
-      }
+      },
     },
     {
       icon: AiOutlineSetting,
@@ -91,7 +96,7 @@ const Header = () => {
       onClick: () => {
         console.log("Settings clicked");
         setShowProfileDropdown(false);
-      }
+      },
     },
     {
       icon: AiOutlineQuestionCircle,
@@ -99,7 +104,7 @@ const Header = () => {
       onClick: () => {
         console.log("Help & Support clicked");
         setShowProfileDropdown(false);
-      }
+      },
     },
     {
       icon: AiOutlineLogout,
@@ -108,13 +113,13 @@ const Header = () => {
         console.log("Sign Out clicked");
         setShowProfileDropdown(false);
       },
-      isDestructive: true
-    }
+      isDestructive: true,
+    },
   ];
 
   return (
     <header
-      className="shadow-sm border-b px-6 py-4 relative"
+      className="shadow-sm border-b px-6 py-2 relative"
       style={{
         backgroundColor: theme.colors.headerBg,
         borderColor: theme.colors.headerBorder,
@@ -125,23 +130,15 @@ const Header = () => {
         {/* Title */}
         <div>
           <h1
-            className="text-2xl font-bold"
+            className="text-xl font-bold"
             style={{ color: theme.colors.textPrimary }}
           >
             Welcome back!
           </h1>
-          <p
-            className="text-sm mt-1"
-            style={{ color: theme.colors.textSecondary }}
-          >
-            Here's what's happening with your projects today.
-          </p>
         </div>
 
         {/* Right section */}
         <div className="flex items-center space-x-4">
-       
-
           {/* Notifications */}
           <button
             onClick={() => setShowNotifications(!showNotifications)}
@@ -151,15 +148,17 @@ const Header = () => {
               color: theme.colors.buttonTextOnSecondary,
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = theme.colors.buttonSecondaryHover;
+              e.currentTarget.style.backgroundColor =
+                theme.colors.buttonSecondaryHover;
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = theme.colors.buttonSecondary;
+              e.currentTarget.style.backgroundColor =
+                theme.colors.buttonSecondary;
             }}
           >
             <AiOutlineBell className="w-5 h-5" />
             {/* Notification badge */}
-            <span 
+            <span
               className="absolute -top-1 -right-1 w-3 h-3 rounded-full text-xs flex items-center justify-center"
               style={{ backgroundColor: theme.colors.error }}
             />
@@ -171,17 +170,21 @@ const Header = () => {
               onClick={() => setShowThemeDropdown(!showThemeDropdown)}
               className="flex items-center space-x-2 p-2 rounded-lg transition-colors duration-200"
               style={{
-                backgroundColor: showThemeDropdown ? theme.colors.buttonSecondaryHover : theme.colors.buttonSecondary,
+                backgroundColor: showThemeDropdown
+                  ? theme.colors.buttonSecondaryHover
+                  : theme.colors.buttonSecondary,
                 color: theme.colors.buttonTextOnSecondary,
               }}
               onMouseEnter={(e) => {
                 if (!showThemeDropdown) {
-                  e.currentTarget.style.backgroundColor = theme.colors.buttonSecondaryHover;
+                  e.currentTarget.style.backgroundColor =
+                    theme.colors.buttonSecondaryHover;
                 }
               }}
               onMouseLeave={(e) => {
                 if (!showThemeDropdown) {
-                  e.currentTarget.style.backgroundColor = theme.colors.buttonSecondary;
+                  e.currentTarget.style.backgroundColor =
+                    theme.colors.buttonSecondary;
                 }
               }}
             >
@@ -189,10 +192,10 @@ const Header = () => {
               <span className="hidden sm:block text-sm font-medium">
                 {getCurrentThemeInfo().name}
               </span>
-              <AiOutlineDown 
+              <AiOutlineDown
                 className={`w-4 h-4 transition-transform duration-200 ${
-                  showThemeDropdown ? 'rotate-180' : ''
-                }`} 
+                  showThemeDropdown ? "rotate-180" : ""
+                }`}
               />
             </button>
 
@@ -206,44 +209,50 @@ const Header = () => {
                   boxShadow: theme.shadows.lg,
                 }}
               >
-                <div className="py-2">
+                <div className="py-1">
                   {themeOptions.map((themeOption) => (
                     <button
                       key={themeOption.key}
                       onClick={() => handleThemeChange(themeOption.key)}
-                      className="flex items-center space-x-3 w-full px-4 py-3 text-left transition-colors duration-200"
+                      className="flex items-center space-x-3 w-full px-4 py-1.5 text-left transition-colors duration-200"
                       style={{
-                        backgroundColor: currentTheme === themeOption.key ? theme.colors.secondary : 'transparent',
+                        backgroundColor:
+                          currentTheme === themeOption.key
+                            ? theme.colors.secondary
+                            : "transparent",
                         color: theme.colors.textPrimary,
                       }}
                       onMouseEnter={(e) => {
                         if (currentTheme !== themeOption.key) {
-                          e.currentTarget.style.backgroundColor = theme.colors.secondary;
+                          e.currentTarget.style.backgroundColor =
+                            theme.colors.secondary;
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (currentTheme !== themeOption.key) {
-                          e.currentTarget.style.backgroundColor = 'transparent';
+                          e.currentTarget.style.backgroundColor = "transparent";
                         }
                       }}
                     >
                       <span className="text-lg">{themeOption.icon}</span>
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium">{themeOption.name}</span>
+                          <span className="text-sm font-medium">
+                            {themeOption.name}
+                          </span>
                           {currentTheme === themeOption.key && (
-                            <span 
+                            <span
                               className="text-xs px-2 py-1 rounded-full"
-                              style={{ 
+                              style={{
                                 backgroundColor: theme.colors.success,
-                                color: '#ffffff'
+                                color: "#ffffff",
                               }}
                             >
                               Active
                             </span>
                           )}
                         </div>
-                        <p 
+                        <p
                           className="text-xs mt-1"
                           style={{ color: theme.colors.textMuted }}
                         >
@@ -263,17 +272,21 @@ const Header = () => {
               onClick={() => setShowProfileDropdown(!showProfileDropdown)}
               className="flex items-center space-x-2 p-2 rounded-lg transition-colors duration-200"
               style={{
-                backgroundColor: showProfileDropdown ? theme.colors.buttonSecondaryHover : theme.colors.buttonSecondary,
+                backgroundColor: showProfileDropdown
+                  ? theme.colors.buttonSecondaryHover
+                  : theme.colors.buttonSecondary,
                 color: theme.colors.buttonTextOnSecondary,
               }}
               onMouseEnter={(e) => {
                 if (!showProfileDropdown) {
-                  e.currentTarget.style.backgroundColor = theme.colors.buttonSecondaryHover;
+                  e.currentTarget.style.backgroundColor =
+                    theme.colors.buttonSecondaryHover;
                 }
               }}
               onMouseLeave={(e) => {
                 if (!showProfileDropdown) {
-                  e.currentTarget.style.backgroundColor = theme.colors.buttonSecondary;
+                  e.currentTarget.style.backgroundColor =
+                    theme.colors.buttonSecondary;
                 }
               }}
             >
@@ -286,10 +299,10 @@ const Header = () => {
                 className="w-8 h-8"
               />
               <span className="hidden md:block font-medium">John Doe</span>
-              <AiOutlineDown 
+              <AiOutlineDown
                 className={`w-4 h-4 transition-transform duration-200 ${
-                  showProfileDropdown ? 'rotate-180' : ''
-                }`} 
+                  showProfileDropdown ? "rotate-180" : ""
+                }`}
               />
             </button>
 
@@ -304,7 +317,10 @@ const Header = () => {
                 }}
               >
                 {/* User Info Section */}
-                <div className="px-4 py-3 border-b" style={{ borderColor: theme.colors.border }}>
+                <div
+                  className="px-4 py-3 border-b"
+                  style={{ borderColor: theme.colors.border }}
+                >
                   <div className="flex items-center space-x-3">
                     <Image
                       src="/api/placeholder/40/40"
@@ -315,10 +331,16 @@ const Header = () => {
                       className="w-10 h-10"
                     />
                     <div>
-                      <p className="font-medium" style={{ color: theme.colors.textPrimary }}>
+                      <p
+                        className="font-medium"
+                        style={{ color: theme.colors.textPrimary }}
+                      >
                         John Doe
                       </p>
-                      <p className="text-sm" style={{ color: theme.colors.textSecondary }}>
+                      <p
+                        className="text-sm"
+                        style={{ color: theme.colors.textSecondary }}
+                      >
                         john.doe@example.com
                       </p>
                     </div>
@@ -335,13 +357,16 @@ const Header = () => {
                         onClick={item.onClick}
                         className="flex items-center space-x-3 w-full px-4 py-2 text-left transition-colors duration-200"
                         style={{
-                          color: item.isDestructive ? theme.colors.error : theme.colors.textPrimary,
+                          color: item.isDestructive
+                            ? theme.colors.error
+                            : theme.colors.textPrimary,
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor = theme.colors.secondary;
+                          e.currentTarget.style.backgroundColor =
+                            theme.colors.secondary;
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.backgroundColor = 'transparent';
+                          e.currentTarget.style.backgroundColor = "transparent";
                         }}
                       >
                         <IconComponent className="w-4 h-4" />

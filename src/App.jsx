@@ -8,6 +8,7 @@ import Login from "./Pages/Auth/Login";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Home from "./Pages/Home/Home";
 import LayoutWrapper from "./Component/Layout/LayoutWrapper";
+import User from "./Pages/User/User";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route element={<LayoutWrapper />}>
               <Route path="/" element={<Home />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/user" element={<User />} />
             </Route>
           </Route>
         </Routes>

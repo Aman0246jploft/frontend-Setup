@@ -1,9 +1,8 @@
-
 import React, { createContext, useState, useEffect } from "react";
 import { themes } from "./themes";
 
 // Create the context with a default value
-export const ThemeContext = createContext(); 
+export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState("light");
@@ -56,8 +55,6 @@ export const ThemeProvider = ({ children }) => {
   };
 
   return (
-    <ThemeContext.Provider value={value}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 };
