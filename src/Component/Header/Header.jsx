@@ -6,17 +6,31 @@ import {
   AiOutlineLogout,
   AiOutlineProfile,
   AiOutlineQuestionCircle,
+  AiOutlineMenu,
 } from "react-icons/ai";
 import { useTheme } from "../../contexts/theme/hook/useTheme";
 import Image from "../Atoms/Image/Image";
 
-const Header = () => {
+const Header = ({ toggleSidebar }) => {
   const { currentTheme, changeTheme, theme } = useTheme();
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showThemeDropdown, setShowThemeDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const profileDropdownRef = useRef(null);
   const themeDropdownRef = useRef(null);
+
+  // Check if screen is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Theme options with their display info
   const themeOptions = [
@@ -119,7 +133,7 @@ const Header = () => {
 
   return (
     <header
-      className="shadow-sm border-b px-6 py-2 relative"
+      className="shadow-sm border-b px-4 md:px-6 py-2 relative"
       style={{
         backgroundColor: theme.colors.headerBg,
         borderColor: theme.colors.headerBorder,
@@ -127,18 +141,43 @@ const Header = () => {
       }}
     >
       <div className="flex items-center justify-between">
-        {/* Title */}
-        <div>
-          <h1
-            className="text-xl font-bold"
-            style={{ color: theme.colors.textPrimary }}
-          >
-            Welcome back!
-          </h1>
+        {/* Left section */}
+        <div className="flex items-center space-x-4">
+          {/* Mobile Menu Button */}
+          {isMobile && (
+            <button
+              onClick={toggleSidebar}
+              className="p-2 rounded-lg transition-colors duration-200 md:hidden"
+              style={{
+                backgroundColor: theme.colors.buttonSecondary,
+                color: theme.colors.buttonTextOnSecondary,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor =
+                  theme.colors.buttonSecondaryHover;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor =
+                  theme.colors.buttonSecondary;
+              }}
+            >
+              <AiOutlineMenu className="w-5 h-5" />
+            </button>
+          )}
+
+          {/* Title */}
+          <div>
+            <h1
+              className="text-lg md:text-xl font-bold"
+              style={{ color: theme.colors.textPrimary }}
+            >
+              Welcome back!
+            </h1>
+          </div>
         </div>
 
         {/* Right section */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 md:space-x-4">
           {/* Notifications */}
           <button
             onClick={() => setShowNotifications(!showNotifications)}
@@ -291,7 +330,7 @@ const Header = () => {
               }}
             >
               <Image
-                src="/api/placeholder/32/32" // Replace with actual user profile image
+                src="/api/placeholder/32/32"
                 alt="Profile"
                 width={32}
                 height={32}
