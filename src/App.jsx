@@ -1,19 +1,23 @@
 // src/App.jsx
 
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
-import Login from "./Pages/Auth/Login";
-import Dashboard from "./Pages/Dashboard/Dashboard";
-import Home from "./Pages/Home/Home";
 import LayoutWrapper from "./Component/Layout/LayoutWrapper";
-import User from "./Pages/User/User";
+import Loader from "./Component/Common/Loader";
+
+
+// Lazy-loaded pages
+const Login = lazy(() => import("./Pages/Auth/Login"));
+const Dashboard = lazy(() => import("./Pages/Dashboard/Dashboard"));
+const Home = lazy(() => import("./Pages/Home/Home"));
+const User = lazy(() => import("./Pages/User/User"));
 
 function App() {
   return (
-    <>
-      <Router>
+    <Router>
+      <Suspense fallback={<Loader />}>
         <Routes>
           {/* Public Routes */}
           <Route element={<PublicRoute />}>
@@ -21,7 +25,7 @@ function App() {
           </Route>
 
           {/* Private Routes */}
-          {/* <Route element={<PrivateRoute />}> */}
+          {/* Replace with <PrivateRoute /> if needed */}
           <Route element={<PublicRoute />}>
             <Route element={<LayoutWrapper />}>
               <Route path="/" element={<Home />} />
@@ -30,8 +34,8 @@ function App() {
             </Route>
           </Route>
         </Routes>
-      </Router>
-    </>
+      </Suspense>
+    </Router>
   );
 }
 

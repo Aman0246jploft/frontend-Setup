@@ -9,6 +9,19 @@ export default function Login() {
   let [phone, setPhone] = useState("");
   const isValidPhone = (phone) => /^\d{10}$/.test(phone);
   const toast = useToast();
+
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const imageUrl = URL.createObjectURL(file);
+      setImagePreview(imageUrl);
+    } else {
+      setImagePreview(null);
+    }
+  };
+
   return (
     <>
       {/* <Button onClick={() => console.log("Clicked!")}>Click Me</Button>
@@ -66,6 +79,21 @@ export default function Login() {
         rounded
         shadow
       /> */}
+
+      <div className="p-4">
+        <input type="file" accept="image/*" onChange={handleImageChange} />
+
+        {imagePreview && (
+          <div className="mt-4">
+            <p className="mb-2 text-gray-600">Image Preview:</p>
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="w-48 h-auto rounded shadow"
+            />
+          </div>
+        )}
+      </div>
     </>
   );
 }
