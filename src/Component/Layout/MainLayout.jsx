@@ -4,7 +4,6 @@ import Sidebar from "../Sidebar/Sidebar";
 import Header from "../Header/Header";
 import { useTheme } from "../../contexts/theme/hook/useTheme";
 
-
 const MainLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const { theme } = useTheme(); // Access the theme
@@ -14,7 +13,10 @@ const MainLayout = ({ children }) => {
   };
 
   return (
-    <div className="flex h-screen" style={{ backgroundColor: theme.colors.background }}>
+    <div
+      className="flex h-screen"
+      style={{ backgroundColor: theme.colors.background }}
+    >
       {/* Sidebar */}
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
