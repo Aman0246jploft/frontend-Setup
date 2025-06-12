@@ -2,6 +2,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosClient from '../../api/axiosClient';
 import authAxiosClient from '../../api/authAxiosClient';
+import useToast from '../../Component/ToastProvider/useToast';
+
 
 // Unauthenticated API call
 export const fetchPublicUsers = createAsyncThunk(
@@ -29,45 +31,77 @@ export const fetchPrivateUsers = createAsyncThunk(
     }
 );
 
+
+
+
+export const login = createAsyncThunk(
+    'user/login',
+    async (data, thunkAPI) => {
+        try {
+            const res = await axiosClient.post('/user/login', data);
+            return res.data;
+        } catch (err) {
+            console.log('error00', err.response.data.message)
+            return thunkAPI.rejectWithValue(err.response?.data?.message || 'Error');
+        }
+    }
+);
+
+
+
+
+
 const userSlice = createSlice({
     name: 'user',
     initialState: {
-        publicUsers: [],
-        privateUsers: [],
         loading: false,
         error: null,
+        authData: {}
     },
     reducers: {},
     extraReducers: (builder) => {
         builder
-
-            // Public users
-            .addCase(fetchPublicUsers.pending, (state) => {
+            .addCase(login.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchPublicUsers.fulfilled, (state, action) => {
+            .addCase(login.fulfilled, (state, action) => {
                 state.loading = false;
-                state.publicUsers = action.payload;
+                state.authData = action.payload;
             })
-            .addCase(fetchPublicUsers.rejected, (state, action) => {
+            .addCase(login.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })
 
-            // Private users
-            .addCase(fetchPrivateUsers.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(fetchPrivateUsers.fulfilled, (state, action) => {
-                state.loading = false;
-                state.privateUsers = action.payload;
-            })
-            .addCase(fetchPrivateUsers.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
-            });
+
+        // // Public users
+        // .addCase(fetchPublicUsers.pending, (state) => {
+        //     state.loading = true;
+        //     state.error = null;
+        // })
+        // .addCase(fetchPublicUsers.fulfilled, (state, action) => {
+        //     state.loading = false;
+        //     state.publicUsers = action.payload;
+        // })
+        // .addCase(fetchPublicUsers.rejected, (state, action) => {
+        //     state.loading = false;
+        //     state.error = action.payload;
+        // })
+
+        // // Private users
+        // .addCase(fetchPrivateUsers.pending, (state) => {
+        //     state.loading = true;
+        //     state.error = null;
+        // })
+        // .addCase(fetchPrivateUsers.fulfilled, (state, action) => {
+        //     state.loading = false;
+        //     state.privateUsers = action.payload;
+        // })
+        // .addCase(fetchPrivateUsers.rejected, (state, action) => {
+        //     state.loading = false;
+        //     state.error = action.payload;
+        // });
     },
 });
 
