@@ -11,10 +11,10 @@ import {
   AiOutlineRight,
 } from "react-icons/ai";
 import { useTheme } from "../../contexts/theme/hook/useTheme";
-import clsx from "clsx"; 
+import clsx from "clsx";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
-  const { theme } = useTheme(); 
+  const { theme } = useTheme();
   const location = useLocation();
 
   const menuItems = [
@@ -30,12 +30,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     <>
       {/* Mobile Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
           onClick={toggleSidebar}
         />
       )}
-      
+
       <div
         style={{
           backgroundColor: theme.colors.background,
@@ -160,7 +160,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                   >
                     <Icon className="w-6 h-6 flex-shrink-0" />
                     {/* Always show text on mobile, conditionally on desktop */}
-                    <span className={clsx("ml-3 font-medium text-sm overflow-hidden whitespace-nowrap", !isOpen && "md:hidden")}>
+                    <span
+                      className={clsx(
+                        "ml-3 font-medium text-sm overflow-hidden whitespace-nowrap",
+                        !isOpen && "md:hidden"
+                      )}
+                    >
                       {item.name}
                     </span>
 
