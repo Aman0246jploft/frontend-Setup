@@ -1,6 +1,7 @@
 // src/api/authAxiosClient.js
 import axios from 'axios';
 import { baseURL } from './baseUrl';
+import { useAuth } from '../auth/useAuth';
 
 const authAxiosClient = axios.create({
   baseURL: baseURL,
@@ -8,7 +9,7 @@ const authAxiosClient = axios.create({
 });
 
 authAxiosClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const token = useAuth().user
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

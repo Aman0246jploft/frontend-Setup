@@ -3,6 +3,12 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosClient from '../../api/axiosClient';
 import authAxiosClient from '../../api/authAxiosClient';
 import useToast from '../../Component/ToastProvider/useToast';
+import { toast } from 'react-toastify';
+
+export function capitalizeFirstLetter(str) {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 
 // Unauthenticated API call
@@ -39,10 +45,16 @@ export const login = createAsyncThunk(
     async (data, thunkAPI) => {
         try {
             const res = await axiosClient.post('/user/login', data);
+            localStorage.setItem("kadSunInfo", JSON.stringify(res.data?.data))
             return res.data;
         } catch (err) {
-            console.log('error00', err.response.data.message)
-            return thunkAPI.rejectWithValue(err.response?.data?.message || 'Error');
+            console.error(`Login error [${err.responseCode || 500}]: ${err.message}`);
+            let message = capitalizeFirstLetter(err.message)
+            toast.error(message)
+            return thunkAPI.rejectWithValue({
+                message: err.message,
+                code: err.responseCode || 500,
+            });
         }
     }
 );
@@ -74,34 +86,6 @@ const userSlice = createSlice({
                 state.error = action.payload;
             })
 
-
-        // // Public users
-        // .addCase(fetchPublicUsers.pending, (state) => {
-        //     state.loading = true;
-        //     state.error = null;
-        // })
-        // .addCase(fetchPublicUsers.fulfilled, (state, action) => {
-        //     state.loading = false;
-        //     state.publicUsers = action.payload;
-        // })
-        // .addCase(fetchPublicUsers.rejected, (state, action) => {
-        //     state.loading = false;
-        //     state.error = action.payload;
-        // })
-
-        // // Private users
-        // .addCase(fetchPrivateUsers.pending, (state) => {
-        //     state.loading = true;
-        //     state.error = null;
-        // })
-        // .addCase(fetchPrivateUsers.fulfilled, (state, action) => {
-        //     state.loading = false;
-        //     state.privateUsers = action.payload;
-        // })
-        // .addCase(fetchPrivateUsers.rejected, (state, action) => {
-        //     state.loading = false;
-        //     state.error = action.payload;
-        // });
     },
 });
 

@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import Button from "../../Component/Atoms/Button/Button";
 import Input from "../../Component/Atoms/InputFields/Inputfield";
 import Image from "../../Component/Atoms/Image/Image";
-import useToast from "../../Component/ToastProvider/useToast";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "../../contexts/theme/hook/useTheme";
 import { login } from "../../features/slices/userSlice";
+import { toast } from "react-toastify";
+import { Navigate, useNavigate } from "react-router";
 
 export default function Login() {
+  const navigate = useNavigate();
   const { theme } = useTheme();
-  const toast = useToast();
+
   const [form, setForm] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
@@ -34,16 +37,17 @@ export default function Login() {
     dispatch(login({ email: form.email, password: form.password }))
       .then((result) => {
         if (login.fulfilled.match(result)) {
-          toast.success("Login successful");
+          toast.success("Login Successful");
+          navigate("/dashboard")
         } else {
-          toast.error(result.payload || "Login failed");
+          const { message, code } = result.payload || {};
+          console.error(`Login failed [${code}]: ${message}`);
         }
       })
-      .catch((err) => {
-        toast.error("Something went wrong");
-        console.error(err);
-      })
-      .finally(() => {});
+      .catch((error) => {
+        console.error("Unexpected error:", error);
+        toast.error("Unexpected error occurred");
+      });
   };
 
   let { loading, error } = selector ? selector : {};

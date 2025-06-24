@@ -24,6 +24,14 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     { name: "Reports", href: "/#", icon: AiOutlineFileText },
     { name: "Notifications", href: "/#", icon: AiOutlineBell },
     { name: "Settings", href: "/#", icon: AiOutlineSetting },
+    { name: "Sell Product", href: "/sellProduct", icon: AiOutlineSetting },
+    { name: "Category", href: "/category", icon: AiOutlineSetting },
+
+    {
+      name: "Auction Product",
+      href: "/auctionProduct",
+      icon: AiOutlineSetting,
+    },
   ];
 
   return (

@@ -66,8 +66,9 @@ const DataTable = ({ columns, data }) => {
               >
                 {columns.map((col) => {
                   const value = row[col.key];
+
                   const content = col.render
-                    ? col.render(value, row)
+                    ? col.render(value, row, rowIndex) // <-- Fix: include rowIndex
                     : String(value);
 
                   return (

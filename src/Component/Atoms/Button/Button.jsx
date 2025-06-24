@@ -6,7 +6,7 @@ import { useTheme } from "../../../contexts/theme/hook/useTheme";
 const Button = ({
   children,
   variant = "primary",
-  size = "md",
+  size = "sm",
   type = "button",
   disabled = false,
   loading = false,
