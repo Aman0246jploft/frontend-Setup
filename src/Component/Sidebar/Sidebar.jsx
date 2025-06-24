@@ -45,7 +45,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           "fixed left-0 top-0 h-full border-r z-40 transition-all duration-300 ease-in-out",
           // Desktop behavior (unchanged)
           "md:translate-x-0",
-          isOpen ? "md:w-64" : "md:w-16",
+          isOpen ? "md:w-60 " : "md:w-16",
           // Mobile behavior (new)
           "w-64 md:w-auto",
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
