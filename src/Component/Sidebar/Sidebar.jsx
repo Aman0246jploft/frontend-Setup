@@ -25,7 +25,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     { name: "Notifications", href: "/#", icon: AiOutlineBell },
     { name: "Settings", href: "/#", icon: AiOutlineSetting },
     { name: "Sell Product", href: "/sellProduct", icon: AiOutlineSetting },
-    { name: "Category", href: "/category", icon: AiOutlineSetting },
+
 
     {
       name: "Auction Product",

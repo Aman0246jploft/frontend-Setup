@@ -7,7 +7,7 @@ import PublicRoute from "./routes/PublicRoute";
 import LayoutWrapper from "./Component/Layout/LayoutWrapper";
 import Loader from "./Component/Common/Loader";
 import SellProduct from "./Component/SellProduct/SellProduct";
-import Category from "./Component/Category/Category";
+
 
 // Lazy-loaded pages
 const Login = lazy(() => import("./Pages/Auth/Login"));
@@ -32,7 +32,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/user" element={<User />} />
               <Route path="/sellProduct" element={<SellProduct />} />
-              <Route path="/category" element={<Category />} />
+     
             </Route>
           </Route>
         </Routes>
